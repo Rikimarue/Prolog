@@ -1,5 +1,5 @@
 
-%hypothesises
+/*facts*/
 
 disease(Patient,depression):-
 						symptom(Patient, difficulty_concentrating),
