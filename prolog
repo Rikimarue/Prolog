@@ -35,11 +35,17 @@ disease(Patient,eating_disorder):-
 						symptom(Patient, language_problems),
 						symptom(Patient, trouble_with_driving).
 						
-disease(Patient,lung_cancer):-
-						symptom(Patient, weight_loss),
-						symptom(Patient, fear_of_gaining_weight),
-						symptom(Patient, low_self_esteem),
-						symptom(Patient, fear_of_body_shame).
+disease(Patient,schizophrenia):-
+						symptom(Patient, delusions),
+						symptom(Patient, hallucinations),
+						symptom(Patient, disorganized_thinking ),
+						symptom(Patient, withdrawal_from_friends_and_family).
+						
+disease(Patient,panic_disorder):-
+						symptom(Patient, racing_heart),
+						symptom(Patient, feeling_weak),
+						symptom(Patient, sense_of_terror ),
+						symptom(Patient, chest_pains).
 						
 
 /*Ask rules*/
