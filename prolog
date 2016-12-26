@@ -1,65 +1,150 @@
 
-/*facts*/
+rule(1,
+     lhs( [av(feeling_well, yes),not(av(eating_problem, yes)), av(depression, yes)] ),
+     rhs( av(problem, depression_problem), 100) ).
+  
+rule(2,
+     lhs( [av(di1fficulty_concentrating, yes)] ),
+     rhs( av(depression, yes), 20) ).
 
-disease(Patient,depression):-
-						symptom(Patient, difficulty_concentrating),
-						symptom(Patient, decreased_energy),
-						symptom(Patient, weight_loss),
-						symptom(Patient, lack_of_appetite),
-						symptom(Patient, feelings_of_guilt),
-						symptom(Patient, feelings_hopelessness).
-								
-disease(Patient,social_anxiety):-
-						symptom(Patient, intense_anxiety_in_social_situations),
-						symptom(Patient, avoidance_of_social_situations),
-						symptom(Patient, confusion),
-						symptom(Patient, sweating_shaking).
-							
-disease(Patient,obsessive_compulsive_disorder):-
-						symptom(Patient, repeated_unwanted_ideas),
-						symptom(Patient, thoughts_that_you_might_cause_others_harm),
-						symptom(Patient, fear_of_contamination).
-						
-disease(Patient,autism):-
-						symptom(Patient, extreme_difficulty_in_learning_language),
-						symptom(Patient, inability_to_understand_other_peoples_feelings),
-						symptom(Patient, aggressive_self_injurious_behavior).
-						
-		
-						
-disease(Patient,eating_disorder):-
-						symptom(Patient, having_less_energy_to_do_anyting),
-						symptom(Patient, less_interest_in_work),
-						symptom(Patient, hard_time_with_everyday_tasks),
-						symptom(Patient, loss_of_recent_memories),
-						symptom(Patient, language_problems),
-						symptom(Patient, trouble_with_driving).
-						
-disease(Patient,schizophrenia):-
-						symptom(Patient, delusions),
-						symptom(Patient, hallucinations),
-						symptom(Patient, disorganized_thinking ),
-						symptom(Patient, withdrawal_from_friends_and_family).
-						
-disease(Patient,panic_disorder):-
-						symptom(Patient, racing_heart),
-						symptom(Patient, feeling_weak),
-						symptom(Patient, sense_of_terror ),
-						symptom(Patient, chest_pains).
-						
+rule(3,
+     lhs( [av(decreased_energy, yes)] ),
+     rhs( av(depression, yes), 20) ).
 
-/*Ask rules*/
+rule(4,
+     lhs( [av(weight_loss, yes)] ),
+     rhs( av(depression, yes), 20) ).
 
-symptom(P, Val):-ask('Does the Patient have',Val).
-ask(Obj, Val):-known(Obj, Val, true),!.
-ask(Obj, Val):-known(Obj, Val, false),!, fail.
-ask(Obj, Val):-nl,write(Obj),write(' '),
-			write( Val) , write('?(y/n)'), read(Ans), !,
-			((Ans=y, assert(known(Obj, Val, true)));(assert(known(Obj, Val, false)),fail)).
-			
-diagnose:-nl,write('Diagnosing mental disease..........'),nl,disease(symptom,Disease) ,!,nl,
-			write('That mental disease could be '), write(Disease).
-diagnose:- nl, write('Sorry,we may not be able to diagnose the desease!!').
+rule(5,
+     lhs( [av(decreased_energy, yes)] ),
+     rhs( av(depression, yes), 20) ).
 
-start:-repeat, abolish(known/3),dynamic(known/3), retractall(known/3), diagnose,nl,nl, write('Try again ? (y/n)'),read(Resp),\+ Resp=y,
-		nl,write('Bye ! Thanks for using this system'),abolish(known,3) .
+rule(6,
+     lhs( [av(confusion, yes)] ),
+     rhs( av(depression, yes), 10) ).
+     
+rule(7,
+     lhs( [av(feelings_hopelessness, yes)] ),
+     rhs( av(depression, yes), 20) ).
+
+
+%depression end 
+
+rule(8,
+     lhs( [av(feeling_well, yes),not(av(eating_problem, yes)), av(social_anxiety, yes)] ),
+     rhs( av(problem, social_anxiety_problem), 100) ).
+     
+ 
+rule(9,
+     lhs( [av(weighintense_anxiety_in_social_situationst_loss, yes)] ),
+     rhs( av(social_anxiety, yes), 30) ).
+
+rule(10,
+     lhs( [av(sweating_shaking, yes)] ),
+     rhs( av(social_anxiety, yes), 20) ).
+
+rule(11,
+     lhs( [av(confusion, yes)] ),
+     rhs( av(social_anxiety, yes), 25) ).
+     
+
+%social_anxiety end 
+
+
+     
+rule(13,
+     lhs( [av(feeling_well, yes),not(av(eating_problem, yes)), av(autism, yes)] ),
+     rhs( av(problem, autism_problem), 100) ).
+  
+rule(14,
+     lhs( [av(extreme_difficulty_in_learning_language, yes)] ),
+     rhs( av(autism, yes), 30) ).
+     
+
+    
+rule(15,
+     lhs( [av(inability_to_understand_other_peoples_feelings, yes)] ),
+     rhs( av(autism, yes), 30) ).
+ 
+rule(16,
+     lhs( [av(aggressive_self_injurious_behavior, yes)] ),
+     rhs( av(autism, yes), 30) ).     
+
+%autism_problem end     
+
+rule(17,
+     lhs( [av(feeling_well, yes),av(eating_problem, yes), av(eating_disorder, yes)] ),
+     rhs( av(problem, eating_disorder_problem), 100) ).
+
+rule(18,
+     lhs( [av(eating_problem, yes),av(having_less_energy_to_do_anyting, yes)] ),
+     rhs( av(eating_disorder, yes), 30) ).
+    
+rule(19,
+     lhs( [av(eating_problem, yes),av(less_interest_in_work, yes)] ),
+	 rhs( av(eating_disorder, yes), 30) ).
+ 
+rule(20,
+     lhs( [av(eating_problem, yes),av(hard_time_with_everyday_tasks, yes)] ),
+     rhs( av(eating_disorder, yes), 30) ).
+
+rule(21,
+     lhs( [av(eating_problem, yes),av(loss_of_recent_memories, yes)] ),
+     rhs( av(eating_disorder, yes), 30) ).
+          
+rule(22,
+     lhs( [av(eating_problem, yes),av(trouble_with_driving, yes)] ),
+     rhs( av(eating_disorder, yes), 30) ).     
+ 
+%eating_disorder_problem end
+
+rule(23,
+     lhs( [av(feeling_well, yes),not(av(eating_problem, yes)), av(panic_disorder, yes)] ),
+     rhs( av(problem, panic_disorder_problem), 100) ).
+
+rule(24,
+     lhs( [av(panic_problem, yes),av(racing_heart, yes)] ),
+     rhs( av(panic_disorder, yes), 30) ).
+    
+rule(25,
+     lhs( [av(panic_problem, yes),av(feeling_weak, yes)] ),
+    rhs( av(panic_disorder, yes), 30) ).
+ 
+rule(26,
+     lhs( [av(panic_problem, yes),av(sense_of_terror, yes)] ),
+     rhs( av(panic_disorder, yes), 30) ).    
+
+rule(27,
+     lhs( [av(panic_problem, yes),av(chest_pains, yes)] ),
+     rhs( av(panic_disorder, yes), 30) ).
+          
+%panic_disorder_problem end
+
+
+
+askable(feeling_well, 'do you feel unwell?').
+askable(eating_problem, 'do you have problems eating?').
+
+
+askable(di1fficulty_concentrating, 'do you have difficulty concentrating?').
+askable(decreased_energy, 'do you feel decreased energy?').
+askable(weight_loss, 'have you suffered from weight loss?').
+askable(confusion, 'do you feel confused?').
+askable(feelings_hopelessness, 'do you feel hopless?').
+askable(intense_anxiety_in_social_situations, 'are you socilized?').
+askable(sweating_shaking, 'how much do you sweat while shaking?').
+
+askable(extreme_difficulty_in_learning_language, 'do you have difficulty in learning new language?').
+askable(inability_to_understand_other_peoples_feelings, 'do you have problems understanding other people is feeling?').
+askable(aggressive_self_injurious_behavior, 'are you aggerssive?'). 
+
+askable(having_less_energy_to_do_anyting, 'do you have less energy to do anything?'). 
+askable(less_interest_in_work, 'do you feel less interest in work?'). 
+askable(hard_time_with_everyday_tasks, 'do you have trouble with everyday tasks?'). 
+askable(loss_of_recent_memories, 'do you suffer from memory loss?'). 
+askable(trouble_with_driving, 'do you have driving problems?'). 
+
+askable(racing_heart, 'do you suffer from racing heart?').
+askable(feeling_weak, 'do you feel weak?').
+askable(sense_of_terror, 'do you feel terrorized').
+askable(chest_pains, 'do you feel chest pain?').
